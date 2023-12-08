@@ -23,7 +23,6 @@ export const LoginEmail = mutationField("loginEmail", {
     input: nonNull(arg({ type: LoginEmailInputType })),
   },
   resolve: async (_root, { input }, ctx) => {
-    console.log("input", input)
     const user = await ctx.prisma.user.findUnique({
       where: { email: input.email },
       include: userIncludeDevice,
