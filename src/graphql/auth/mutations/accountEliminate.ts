@@ -5,7 +5,7 @@ import { AuthVerifyTokenType } from "../types"
 import { createUserTokens } from "utils/tokenGenerator"
 import bcrypt from "bcrypt"
 import { CheckSessions, userIncludeDevice } from "utils/sessionCheck"
-import { User, UserDevice } from "generated"
+import { User, UserDevice } from "@prisma/client"
 
 interface AuthVerifyTokenType {
   accessToken?: string

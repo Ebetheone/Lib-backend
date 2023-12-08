@@ -3,15 +3,17 @@ import {
   UserRoleEnum,
   UserStatusEnum,
   AccountProviderTypeEnum,
-  TokenVerifyEnum,
   Gender,
+  FileSizeEnum,
+  TokenVerifyEnum,
 } from "nexus-prisma"
 
 export const GenderEnumType = enumType(Gender)
 export const UserRoleEnumType = enumType(UserRoleEnum)
 export const UserStatusEnumType = enumType(UserStatusEnum)
-export const AccountProviderEnumType = enumType(AccountProviderTypeEnum)
+export const FileSizeEnumType = enumType(FileSizeEnum)
 export const TokenVerifyEnumType = enumType(TokenVerifyEnum)
+export const AccountProviderEnumType = enumType(AccountProviderTypeEnum)
 
 export const SortOrder = enumType({
   members: ["asc", "desc"],

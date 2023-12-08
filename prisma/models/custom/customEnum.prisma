@@ -1,0 +1,11 @@
+enum FileSizeEnum {
+    NATIVE
+    MEDIUM
+    SMALL
+    THUMB
+}
+
+enum TokenVerifyEnum {
+    AUTH
+    RESET
+}

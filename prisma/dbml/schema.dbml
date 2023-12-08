@@ -2,18 +2,6 @@
 //// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 //// ------------------------------------------------------
 
-Table Advertisement {
-  id String [pk]
-  title String [not null]
-  description String [not null]
-  image String
-  video String
-  createdUserId String
-  updatedUserId String
-  updatedAt DateTime [default: `now()`, not null]
-  createdAt DateTime [default: `now()`, not null]
-}
-
 Table UserAccount {
   id String [pk]
   user User
@@ -64,10 +52,8 @@ Table UserSession {
 Table User {
   id String [pk]
   userId String [unique]
-  role UserRoleEnum [not null, default: 'MEMBER']
+  role UserRoleEnum [not null, default: 'USER']
   status UserStatusEnum
-  image String
-  userName String
   password String
   email String [unique]
   emailConfirmCode String
@@ -80,11 +66,7 @@ Table User {
   accounts UserAccount [not null]
   devices UserDevice [not null]
   sessions UserSession [not null]
-  cart Cart [not null]
-  orders Order [not null]
-  orderTickets OrderTicket [not null]
-  userNotifications UserNotification [not null]
-  actionByFlights FlightActionByUser [not null]
+  books Book [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
   createdUserId String
@@ -101,8 +83,6 @@ Table UserProfile {
   userId String [unique, not null]
   firstName String
   lastName String
-  registerNumber String [not null]
-  passportNumber String [not null]
   gender Gender [default: 'NONE']
   birthday DateTime
   createdAt DateTime [default: `now()`, not null]
@@ -111,346 +91,20 @@ Table UserProfile {
   updatedUserId String
 }
 
-Table Cart {
+Table Book {
   id String [pk]
-  quantity Int [not null]
-  ticket Ticket [not null]
-  ticketId String [not null]
-  user User [not null]
-  userId String [not null]
-  createdUserId String
-  updatedUserId String
-  updatedAt DateTime [default: `now()`, not null]
-  createdAt DateTime [default: `now()`, not null]
-
-  indexes {
-    (userId, ticketId) [unique]
-  }
-}
-
-Table City {
-  id Int [pk, increment]
-  code String [unique, not null]
+  bookId String
   name String [not null]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-}
-
-Table Flight {
-  id String [pk]
-  flightId String [unique, not null]
-  flightNumber String [not null]
-  planeId String [not null]
-  from String [not null]
-  to String [not null]
-  departure DateTime [not null]
-  arrival DateTime [not null]
-  duration String [not null]
-  stops String [not null, default: 'Direct']
-  isActive Boolean [not null, default: true]
-  link String [not null]
-  status FlightStatusEnum [not null, default: 'ON_TIME']
-  orders Order [not null]
-  tickets Ticket [not null]
-  plane Plane [not null]
-  actionByUsers FlightActionByUser [not null]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-  createdUserId String
-  updatedUserId String
-}
-
-Table QPayInvoice {
-  id String [pk]
-  senderInvoiceNo String [unique, not null]
-  amount String [not null]
-  senderBranchCode String
-  senderStaffCode String
-  invoiceReceiverCode String [not null]
-  invoiceDescription String [not null]
-  callbackUrl String [not null]
-  invoiceId String [unique]
-  qrText String
-  qPayShortUrl String
-  urls QPayUrl [not null]
-  invoiceStatus String
-  paymentId String
-  paymentStatus String
-  paymentFee String
-  paymentAmount String
-  paymentDate DateTime
-  createdAt DateTime [default: `now()`, not null]
-}
-
-Table QPayUrl {
-  id String [pk]
-  qPayInvoice QPayInvoice [not null]
-  qPayInvoiceId String [not null]
-  name String
-  link String [not null]
-}
-
-Table socialPayInvoice {
-  id String [pk]
-  invoiceNo String [not null]
-  amount String [not null]
-  phone String
-  status String
-  qrText String
-  createdAt DateTime [default: `now()`, not null]
-}
-
-Table Notification {
-  id String [pk]
-  type NotificationType [not null]
-  actionValue String
-  translate String [not null]
-  filter NotificationFilterType [not null, default: 'SUCCESS']
-  totalCount Int
-  readCount Int
-  userNotification UserNotification [not null]
-  expiredAt DateTime
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-}
-
-Table UserNotification {
-  id String [pk]
-  isView Boolean [not null, default: false]
-  isRead Boolean [not null, default: false]
-  user User [not null]
-  userId String [not null]
-  notification Notification [not null]
-  notificationId String [not null]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-}
-
-Table Order {
-  id String [pk]
-  orderId String [unique, not null]
-  status OrderStatusEnum [not null, default: 'PENDING']
-  totalCount Int [not null]
-  totalPaymentAmount Int [not null]
-  user User [not null]
-  userId String [not null]
-  orderItems OrderItem [not null]
-  orderPayment OrderPayment
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-  createdUserId String
-  updatedUserId String
-  Flight Flight
-  flightId String
-}
-
-Table OrderItem {
-  id String [pk]
-  ticketName String [not null]
-  ticketCount Int [not null]
-  totalPrice Int [not null]
-  order Order [not null]
-  orderId String [not null]
-  ticket Ticket [not null]
-  ticketId String [not null]
-  orderTickets OrderTicket [not null]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-  createdUserId String
-  updatedUserId String
-
-  indexes {
-    (orderId, ticketId) [unique]
-  }
-}
-
-Table OrderPayment {
-  id String [pk]
-  order Order [not null]
-  orderId String [unique, not null]
-  provider PaymentMethodEnum [not null, default: 'MN_ONEPAY']
-  status OrderPaymentStatusEnum [not null, default: 'PENDING']
-  invoiceId String
-  qrText String
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-  createdUserId String
-  updatedUserId String
-}
-
-Table OrderTicket {
-  id String [pk]
-  user User [not null]
-  userId String [not null]
-  generateId String [not null]
-  qrTicketText String [not null]
-  status OrderTicketStatusEnum [not null, default: 'ORDERED']
-  selection OrderTicketSelectionEnum [not null]
-  orderItem OrderItem [not null]
-  orderItemId String [not null]
-  isEnd Boolean [not null, default: false]
-  statusHistories OrderTicketStatusHistory [not null]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-  createdUserId String
-  updatedUserId String
-}
-
-Table OrderTicketStatusHistory {
-  id String [pk]
-  orderTicket OrderTicket [not null]
-  orderTicketId String [not null]
-  status OrderTicketStatusHistoryEnum [not null]
-  usedStatus OrderTicketStatusHistoryEnum
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-  createdUserId String
-  updatedUserId String
-}
-
-Table Plane {
-  id String [pk]
-  planeId String [unique, not null]
-  planeName String [not null]
-  totalSeats Int [not null]
-  companyName String [not null]
-  companyImage String
-  flights Flight [not null]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-  createdUserId String
-  updatedUserId String
-}
-
-Table AddressMain {
-  id String [pk]
-  zipCode String
-  state SourceAddress
-  stateId Int
-  city SourceAddress
-  cityId Int
-  district SourceAddress
-  districtId Int
-  stateString String
-  cityString String
-  streetString String
-  address1 String [not null]
-  address2 String
-  latitude Float
-  longitude Float
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-}
-
-Table SourceAddress {
-  id Int [pk, increment]
-  mn String [not null]
-  en String
-  parent SourceAddress
-  parentId Int
-  type String [not null]
-  countryCode String [not null]
-  countryId Int [not null]
-  zipCode String
-  SourceAddress SourceAddress [not null]
-  state AddressMain [not null]
-  city AddressMain [not null]
-  district AddressMain [not null]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-}
-
-Table SourceBank {
-  id Int [pk]
-  mn String [not null]
-  en String
-  bankCode String [not null]
-  logo String [not null]
-  showMobile Boolean [not null, default: false]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-}
-
-Table SourceCategory {
-  id Int [pk, increment]
-  code Int [unique, not null]
-  parent SourceCategory
-  parentCode Int
-  mn String [not null]
-  en String
-  SourceCategory SourceCategory [not null]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-}
-
-Table SourceTempFile {
-  id String [pk]
-  folder String [not null]
-  name String [not null]
-  extname String [not null]
-  status SourceTempFileStatusEnum [not null, default: 'CREATED']
-  access Boolean [not null, default: false]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-  createdUserId String
-  updatedUserId String
-}
-
-Table Ticket {
-  id String [pk]
-  ticketId String [unique, not null]
-  flight Flight [not null]
-  flightId String [not null]
-  translates TicketTranslate [not null]
-  capacity Int [not null]
-  price Float [not null]
-  image String
-  type TicketTypeEnum [not null, default: 'ECONOMY']
-  paidCount Int [not null, default: 0]
-  orderedCount Int [not null, default: 0]
-  cartCount Int [not null, default: 0]
-  minimumQuantity Int [not null, default: 1]
-  maximumQuantity Int [not null, default: 300]
-  carts Cart [not null]
-  orderItems OrderItem [not null]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-  createdUserId String
-  updatedUserId String
-}
-
-Table TicketTranslate {
-  id String [pk]
-  languageCode String [not null, default: 'mn']
-  ticket Ticket [not null]
-  ticketId String [not null]
-  name String [not null]
-  description String
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-  createdUserId String
-  updatedUserId String
-
-  indexes {
-    (languageCode, ticketId) [unique]
-  }
-}
-
-Table FlightActionByUser {
-  id String [pk]
-  type MyFlightWhereInputFilterEnum [not null]
-  flight Flight [not null]
-  flightId String [not null]
+  limit Int [not null]
+  category String [not null]
+  price Int [not null]
+  bestSeller Boolean [not null, default: false]
   user User [not null]
   userId String [not null]
   createdAt DateTime [default: `now()`, not null]
   updatedAt DateTime [not null]
   createdUserId String
   updatedUserId String
-
-  indexes {
-    (flightId, userId) [unique]
-  }
 }
 
 Enum AccountProviderTypeEnum {
@@ -471,7 +125,7 @@ Enum Gender {
 
 Enum UserRoleEnum {
   ADMIN
-  MEMBER
+  USER
 }
 
 Enum UserStatusEnum {
@@ -486,115 +140,9 @@ Enum FileSizeEnum {
   THUMB
 }
 
-Enum TicketFilterEnum {
-  ACTIVE
-  EXPIRED
-  CANCELED
-}
-
 Enum TokenVerifyEnum {
   AUTH
   RESET
-}
-
-Enum CartUpsertNumberEnum {
-  INCREMENT
-  DECREMENT
-  MULTIPLY
-  DIVIDE
-  SET
-}
-
-Enum NotificationEnum {
-  email
-  notification
-  sms
-}
-
-Enum FlightStatusEnum {
-  ON_TIME
-  DELAYED
-  CANCELED
-}
-
-Enum NotificationType {
-  REGISTER
-  ORDER_PAYMENT
-}
-
-Enum NotificationFilterType {
-  ERROR
-  SUCCESS
-  WAITING
-}
-
-Enum OrderStatusEnum {
-  PENDING
-  PROCESSED
-  CANCELED
-  REFUNDED
-}
-
-Enum RefundMethodEnum {
-  MN_ONEPAY
-  MN_GATEWAY
-}
-
-Enum PaymentMethodEnum {
-  NONE
-  MN_ONEPAY
-  MN_QPAY
-  MN_SPAY
-  MN_KHAN_BANK
-}
-
-Enum OrderPaymentStatusEnum {
-  PENDING
-  PAID
-  FAILED
-  REFUNDED
-  CANCELLED
-}
-
-Enum OrderTicketStatusEnum {
-  ORDERED
-  USED
-  CANCELLED
-  CHECK_IN
-  CHECK_OUT
-}
-
-Enum OrderTicketSelectionEnum {
-  MEMBER
-  GUEST
-  PARTICIPANT
-}
-
-Enum OrderTicketStatusHistoryEnum {
-  ORDERED
-  USED
-  CANCELLED
-  CHECK_IN
-  CHECK_OUT
-}
-
-Enum SourceTempFileStatusEnum {
-  CREATED
-  UPLOADED
-  DELETED
-}
-
-Enum TicketTypeEnum {
-  ECONOMY
-  BUSINESS
-  FIRST
-}
-
-Enum MyFlightWhereInputFilterEnum {
-  NONE
-  LIKED
-  INTERESTED
-  GOING
 }
 
 Ref: UserAccount.userId > User.id
@@ -607,48 +155,4 @@ Ref: UserSession.deviceId > UserDevice.id
 
 Ref: UserProfile.userId - User.id
 
-Ref: Cart.ticketId > Ticket.id
-
-Ref: Cart.userId > User.id
-
-Ref: Flight.planeId > Plane.id
-
-Ref: QPayUrl.qPayInvoiceId > QPayInvoice.id
-
-Ref: UserNotification.userId > User.id
-
-Ref: UserNotification.notificationId > Notification.id
-
-Ref: Order.userId > User.id
-
-Ref: Order.flightId > Flight.id
-
-Ref: OrderItem.orderId > Order.id
-
-Ref: OrderItem.ticketId > Ticket.id
-
-Ref: OrderPayment.orderId - Order.id
-
-Ref: OrderTicket.userId > User.id
-
-Ref: OrderTicket.orderItemId > OrderItem.id
-
-Ref: OrderTicketStatusHistory.orderTicketId > OrderTicket.id
-
-Ref: AddressMain.stateId > SourceAddress.id
-
-Ref: AddressMain.cityId > SourceAddress.id
-
-Ref: AddressMain.districtId > SourceAddress.id
-
-Ref: SourceAddress.parentId - SourceAddress.id
-
-Ref: SourceCategory.parentCode - SourceCategory.code
-
-Ref: Ticket.flightId > Flight.id
-
-Ref: TicketTranslate.ticketId > Ticket.id [delete: Cascade]
-
-Ref: FlightActionByUser.flightId > Flight.id
-
-Ref: FlightActionByUser.userId > User.id
+Ref: Book.userId > User.id

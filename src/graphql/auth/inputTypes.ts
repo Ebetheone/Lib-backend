@@ -119,13 +119,9 @@ export const ExternalWebAuthInput = inputObjectType({
 
     t.field(User.email)
     t.field(User.phone)
-    t.field(User.image)
-    t.field(User.userName)
 
     t.field(UserProfile.firstName)
     t.field(UserProfile.lastName)
-    t.field(UserProfile.registerNumber)
-    t.field(UserProfile.passportNumber)
 
     t.field(UserAccount.userUid)
     t.field(UserAccount.providerId)

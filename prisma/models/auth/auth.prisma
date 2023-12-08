@@ -1,15 +1,15 @@
 model UserAccount {
-    id String @id @default(uuid())
+    id String @id @default(auto()) @map("_id") @db.ObjectId
 
     user   User?   @relation(fields: [userId], references: [id])
-    userId String?
+    userId String? @db.ObjectId
 
-    userUid String?
+    userUid String? @db.ObjectId
 
     providerName      String?
     providerType      AccountProviderTypeEnum @default(NONE)
-    providerId        String?
-    providerAccountId String?
+    providerId        String?                 @db.ObjectId
+    providerAccountId String?                 @db.ObjectId
 
     refreshToken       String?
     accessToken        String?
@@ -19,17 +19,17 @@ model UserAccount {
 
     createdAt     DateTime @default(now())
     updatedAt     DateTime @updatedAt
-    createdUserId String?
-    updatedUserId String?
+    createdUserId String?  @db.ObjectId
+    updatedUserId String?  @db.ObjectId
 
     @@unique([providerId, providerAccountId])
 }
 
 model UserDevice {
-    id String @id @default(uuid())
+    id String @id @default(auto()) @map("_id") @db.ObjectId
 
     user   User   @relation(fields: [userId], references: [id])
-    userId String
+    userId String @db.ObjectId
 
     deviceOs   String
     deviceType String
@@ -41,13 +41,13 @@ model UserDevice {
 }
 
 model UserSession {
-    id String @id @default(uuid())
+    id String @id @default(auto()) @map("_id") @db.ObjectId
 
     user   User   @relation(fields: [userId], references: [id])
-    userId String
+    userId String @db.ObjectId
 
     device   UserDevice @relation(fields: [deviceId], references: [id])
-    deviceId String
+    deviceId String     @db.ObjectId
 
     fcmToken String?
 

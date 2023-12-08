@@ -1,15 +1,18 @@
 import { AuthErrorMap, AuthErrors } from "./auth"
 import { UserErrorMap, UserErrors } from "./user"
+import { SystemErrorMap, SystemErrors } from "./system"
 import { GraphQLError } from "graphql"
 
 const ErrorMap = {
   ...AuthErrorMap,
   ...UserErrorMap,
+  ...SystemErrorMap,
 }
 
 export const Errors = {
   Auth: AuthErrors,
   User: UserErrors,
+  System: SystemErrors,
 }
 
 export const getError = (code: string) => {

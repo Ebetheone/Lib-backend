@@ -1,0 +1,184 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator nexusPrisma {
+  provider = "nexus-prisma"
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+model UserAccount {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String? @db.ObjectId
+
+  userUid String? @db.ObjectId
+
+  providerName      String?
+  providerType      AccountProviderTypeEnum @default(NONE)
+  providerId        String?                 @db.ObjectId
+  providerAccountId String?                 @db.ObjectId
+
+  refreshToken       String?
+  accessToken        String?
+  accessTokenExpires DateTime?
+
+  signedIn DateTime @default(now())
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  createdUserId String?  @db.ObjectId
+  updatedUserId String?  @db.ObjectId
+
+  @@unique([providerId, providerAccountId])
+}
+
+model UserDevice {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+
+  deviceOs   String
+  deviceType String
+  deviceName String
+
+  isActive Boolean @default(true)
+
+  sessions UserSession[]
+}
+
+model UserSession {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+
+  device   UserDevice @relation(fields: [deviceId], references: [id])
+  deviceId String     @db.ObjectId
+
+  fcmToken String?
+
+  isActive Boolean @default(true)
+  expires  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum AccountProviderTypeEnum {
+  NONE
+  EMAIL
+  PHONE
+  FACEBOOK
+  APPLE
+  GOOGLE
+  TWITTER
+}
+
+model User {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId String? @unique
+
+  role   UserRoleEnum    @default(USER)
+  status UserStatusEnum?
+
+  password String?
+
+  email            String? @unique
+  emailConfirmCode String?
+  isEmailConfirmed Boolean @default(false)
+
+  countryCode String? @default("976")
+
+  phone            String?
+  phoneConfirmCode String?
+  isPhoneConfirmed Boolean @default(false)
+
+  profile  UserProfile?  @relation(name: "UserToUserProfile")
+  accounts UserAccount[]
+  devices  UserDevice[]
+  sessions UserSession[]
+  books    Book[]
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  createdUserId String?
+  updatedUserId String?
+
+  @@unique([countryCode, phone])
+}
+
+model UserProfile {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  user   User   @relation(name: "UserToUserProfile", fields: [userId], references: [id])
+  userId String @unique @db.ObjectId
+
+  firstName String?
+  lastName  String?
+
+  gender   Gender?   @default(NONE)
+  birthday DateTime?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  createdUserId String?
+  updatedUserId String?
+}
+
+enum Gender {
+  NONE
+  MALE
+  FEMALE
+}
+
+enum UserRoleEnum {
+  ADMIN
+  USER
+}
+
+enum UserStatusEnum {
+  ACTIVE
+  INACTIVE
+}
+
+model Book {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  bookId String? @db.ObjectId
+
+  name     String
+  limit    Int
+  category String
+  price    Int
+
+  bestSeller Boolean @default(false)
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  createdUserId String?
+  updatedUserId String?
+}
+
+enum FileSizeEnum {
+  NATIVE
+  MEDIUM
+  SMALL
+  THUMB
+}
+
+enum TokenVerifyEnum {
+  AUTH
+  RESET
+}

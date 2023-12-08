@@ -149,7 +149,6 @@ export const AuthMobile = mutationField("authMobile", {
       const newUser = await ctx.prisma.user.create({
         data: {
           email: providerData.email,
-          userName: providerData.providerName,
           isEmailConfirmed:
             provider === "GOOGLE"
               ? !!(providerData.email && providerData.verified_email)
