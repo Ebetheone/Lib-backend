@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "yarn clean && tsc",
+    "build": "yarn clean && yarn generate && tsc",
     "clean": "rm -rf dist",
     "merge:prisma": "node prisma/index.js && yarn prisma format && yarn prisma validate",
     "generate:prisma": "yarn merge:prisma && yarn prisma generate",
