@@ -7,14 +7,11 @@ export const UserInputType = inputObjectType({
   definition(t) {
     t.field(User.email)
     t.field(User.phone)
-    t.field(UserProfile.registerNumber)
-    t.field(UserProfile.passportNumber)
     t.field(User.countryCode)
     t.field(UserProfile.firstName)
     t.field(UserProfile.lastName)
     t.field(UserProfile.birthday)
     t.nullable.field(UserProfile.gender)
-    t.field(User.image)
     t.field(User.password)
   },
 })

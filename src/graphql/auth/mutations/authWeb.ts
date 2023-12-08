@@ -121,8 +121,6 @@ export const AuthWeb = mutationField("authWeb", {
       const newUser = await ctx.prisma.user.create({
         data: {
           userId: generateUniqueId("U"),
-          image: userCreate.image,
-          userName: userCreate.userName,
           email: userCreate.email,
           isEmailConfirmed: userCreate.isEmailConfirmed,
           phone: userCreate.phone,
@@ -138,8 +136,6 @@ export const AuthWeb = mutationField("authWeb", {
             create: {
               firstName: input?.firstName,
               lastName: input?.lastName,
-              passportNumber: input?.passportNumber,
-              registerNumber: input?.registerNumber,
             },
           },
         },

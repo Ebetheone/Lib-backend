@@ -2,6 +2,12 @@
 ### Do not make changes to this file directly
 
 
+input AccountEliminateInputType {
+  email: String!
+  id: ID!
+  password: String!
+}
+
 enum AccountProviderTypeEnum {
   APPLE
   EMAIL
@@ -12,10 +18,86 @@ enum AccountProviderTypeEnum {
   TWITTER
 }
 
+input AuthEmailResetPasswordInput {
+  email: String!
+  password: String!
+}
+
+input AuthEmailVerifyTokenInput {
+  code: String!
+  email: String!
+  type: TokenVerifyEnum!
+}
+
+input AuthEmailVerifyTokenSenderInput {
+  email: String!
+}
+
+input AuthPhoneResetPasswordInput {
+  countryCode: String!
+  password: String!
+  phone: String!
+}
+
+input AuthPhoneVerifyTokenInput {
+  code: String!
+  countryCode: String!
+  phone: String!
+  type: TokenVerifyEnum!
+}
+
+input AuthPhoneVerifyTokenSenderInput {
+  countryCode: String!
+  phone: String!
+}
+
+type AuthUserType {
+  accounts: [UserAccount!]
+  countryCode: String
+  email: String
+  id: ID!
+  isPassword: Boolean
+  password: String
+  phone: String
+  profile: UserProfile
+  role: UserRoleEnum
+}
+
+type AuthVerifyTokenType {
+  accessToken: String
+  deviceId: String
+  devices: [UserDevice]
+  isEmailConfirmed: Boolean
+  isPhoneConfirmed: Boolean
+  refreshToken: String
+  resetToken: String
+}
+
 """
 A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
 scalar DateTime
+
+input ExternalAuthAppleInput {
+  email: String
+  providerId: String!
+  providerName: String!
+}
+
+input ExternalAuthInput {
+  accessToken: String!
+}
+
+input ExternalWebAuthInput {
+  accessToken: String!
+  email: String
+  firstName: String
+  lastName: String
+  phone: String
+  providerId: String
+  providerName: String
+  userUid: String
+}
 
 enum FileSizeEnum {
   MEDIUM
@@ -35,8 +117,69 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 """
 scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
 
+input LoginEmailInput {
+  deviceId: String
+  email: String!
+  password: String!
+}
+
+input LoginPhoneInput {
+  countryCode: String
+  deviceId: String
+  password: String!
+  phone: String!
+}
+
+type Mutation {
+  accountEliminate(input: AccountEliminateInputType!): AuthVerifyTokenType
+  authEmailForgetPassword(input: AuthEmailVerifyTokenSenderInput!): Boolean
+  authEmailResetPassword(input: AuthEmailResetPasswordInput!): AuthVerifyTokenType
+  authEmailVerifyToken(input: AuthEmailVerifyTokenInput!): AuthVerifyTokenType
+  authEmailVerifyTokenSender(input: AuthEmailVerifyTokenSenderInput!): Boolean
+  authMobile(appleInput: ExternalAuthAppleInput, input: ExternalAuthInput!, provider: String!): AuthVerifyTokenType
+  authPhoneForgetPassword(input: AuthPhoneVerifyTokenSenderInput!): Boolean
+  authPhoneResetPassword(input: AuthPhoneResetPasswordInput!): AuthVerifyTokenType
+  authPhoneVerifyToken(input: AuthPhoneVerifyTokenInput!): AuthVerifyTokenType
+  authPhoneVerifyTokenSender(input: AuthPhoneVerifyTokenSenderInput!): Boolean
+  authWeb(input: ExternalWebAuthInput!): AuthVerifyTokenType
+  createUser(input: UserInput!): User
+  deleteUser(userId: String!): Boolean
+  loginEmail(input: LoginEmailInput!): AuthVerifyTokenType
+  loginPhone(input: LoginPhoneInput!): AuthVerifyTokenType
+  logout(deviceId: String): Boolean
+  refreshAccessToken(input: RefreshToAccessTokenInput): RefreshTokenType
+  registerEmail(input: RegisterEmailInput!): Boolean
+  registerPhone(input: RegisterPhoneInput!): Boolean
+  updateUser(id: String!, input: UserInput!): User
+  userChangePassword(input: UserChangePasswordInput!): Boolean
+  userStatusUpdate(id: String!, input: UserStatusUpdateInput!): Boolean
+}
+
 type Query {
-  ok: Boolean!
+  meAuth: AuthUserType
+  user(input: UserWhereInput): User
+  users(input: UserWhereInput, orderBy: String, skip: Int!, take: Int!): UsersType
+}
+
+input RefreshToAccessTokenInput {
+  refreshToken: String!
+}
+
+type RefreshTokenType {
+  accessToken: String
+  refreshToken: String
+  wsToken: String
+}
+
+input RegisterEmailInput {
+  email: String!
+  password: String!
+}
+
+input RegisterPhoneInput {
+  countryCode: String
+  password: String!
+  phone: String!
 }
 
 enum SortOrder {
@@ -49,12 +192,110 @@ enum TokenVerifyEnum {
   RESET
 }
 
+type User {
+  accounts: [UserAccount!]
+  countryCode: String
+  createdAt: DateTime!
+  devices: [UserDevice!]
+  email: String
+  id: ID!
+  phone: String
+  profile: UserProfile
+  role: UserRoleEnum
+  sessions: [UserSession!]
+  status: UserStatusEnum
+  updatedAt: DateTime!
+  userId: String
+}
+
+type UserAccount {
+  accessToken: String
+  accessTokenExpires: DateTime
+  createdAt: DateTime!
+  id: ID!
+  providerAccountId: String
+  providerId: String
+  providerName: String
+  providerType: AccountProviderTypeEnum
+  refreshToken: String
+  signedIn: DateTime!
+  updatedAt: DateTime!
+  user: User
+  userId: String
+  userUid: String
+}
+
+input UserChangePasswordInput {
+  newPassword: String!
+  newPasswordConfirm: String
+  password: String
+}
+
+type UserDevice {
+  deviceName: String!
+  deviceOs: String!
+  deviceType: String!
+  id: ID!
+  sessions: [UserSession!]
+}
+
+input UserInput {
+  birthday: DateTime
+  countryCode: String
+  email: String
+  firstName: String
+  gender: Gender
+  lastName: String
+  password: String
+  phone: String
+}
+
+type UserProfile {
+  birthday: DateTime
+  firstName: String
+  gender: Gender
+  id: ID!
+  lastName: String
+  user: User
+  userId: String!
+}
+
 enum UserRoleEnum {
   ADMIN
   USER
 }
 
+type UserSession {
+  createdAt: DateTime!
+  device: UserDevice
+  expires: String!
+  fcmToken: String
+  id: ID!
+  isActive: Boolean!
+  updatedAt: DateTime!
+  userId: String!
+}
+
 enum UserStatusEnum {
   ACTIVE
   INACTIVE
+}
+
+input UserStatusUpdateInput {
+  status: UserStatusEnum
+}
+
+input UserWhereInput {
+  email: String
+  firstName: String
+  id: String
+  lastName: String
+  phone: String
+  search: String
+  status: String
+}
+
+type UsersType {
+  count: Int
+  data: [User!]
 }

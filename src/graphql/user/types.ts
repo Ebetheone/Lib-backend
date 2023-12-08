@@ -11,8 +11,6 @@ import {
   UserProfile,
   UserDevice,
 } from "nexus-prisma"
-import { readSignedUrl } from "lib/google-storage"
-import { StorageReadSignedUrlType } from "graphql/file"
 
 export const UsersType = objectType({
   name: "UsersType",
@@ -29,7 +27,6 @@ export const UserType = objectType({
     t.field(User.id)
 
     t.field(User.userId)
-    t.field(User.userName)
 
     t.field(User.role.name, { type: UserRoleEnumType })
     t.field(User.status.name, { type: UserStatusEnumType })
@@ -53,17 +50,6 @@ export const UserType = objectType({
 
     t.field(User.createdAt)
     t.field(User.updatedAt)
-
-    t.field(User.image)
-    t.field("imageUrl", {
-      type: StorageReadSignedUrlType,
-      resolve: parent => {
-        if (parent?.image) {
-          return readSignedUrl(parent?.image)
-        }
-        return null
-      },
-    })
   },
 })
 
@@ -136,8 +122,6 @@ export const UserProfileType = objectType({
     t.field(UserProfile.firstName)
     t.field(UserProfile.lastName)
 
-    t.field(UserProfile.registerNumber)
-    t.field(UserProfile.passportNumber)
     t.field(UserProfile.gender)
     t.field(UserProfile.birthday)
 

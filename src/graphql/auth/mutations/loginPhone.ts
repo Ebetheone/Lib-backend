@@ -5,8 +5,8 @@ import { createUserTokens, signPhoneToken } from "src/utils/tokenGenerator"
 import { LoginPhoneInputType } from "../inputTypes"
 import { AuthVerifyTokenType } from "../types"
 import { CheckSessions, userIncludeDevice } from "utils/sessionCheck"
-import { User, UserDevice } from "generated"
 import { sendCodeServer, smsServerMongolia } from "lib/sms-sender/smsSender"
+import { User, UserDevice } from "@prisma/client"
 
 interface AuthVerifyTokenType {
   accessToken?: string

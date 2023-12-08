@@ -19,14 +19,11 @@ export const UpdateUser = mutationField("updateUser", {
         email: input?.email,
         phone: input?.phone,
         countryCode: input?.countryCode,
-        image: input?.image,
         updatedUserId: ctx.user?.id,
         profile: {
           upsert: {
             where: { userId: id },
             create: {
-              passportNumber: input?.passportNumber,
-              registerNumber: input?.registerNumber,
               firstName: input?.firstName,
               lastName: input?.lastName,
               birthday: input?.birthday,
@@ -35,8 +32,6 @@ export const UpdateUser = mutationField("updateUser", {
               updatedUserId: ctx.user?.id,
             },
             update: {
-              passportNumber: input?.passportNumber,
-              registerNumber: input?.registerNumber,
               firstName: input?.firstName,
               lastName: input?.lastName,
               birthday: input?.birthday,

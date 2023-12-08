@@ -9,7 +9,7 @@ export const userPermissions = (
 
   if (user?.role === "ADMIN") {
     can(["read", "create", "update", "delete"], "User")
-  } else if (user?.role === "MEMBER") {
+  } else if (user?.role === "USER") {
     can(["read", "update"], "User", { id: user.id })
     cannot(["create", "delete"], "User")
   } else {

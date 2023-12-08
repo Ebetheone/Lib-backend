@@ -30,7 +30,6 @@ export const AuthUserType = objectType({
     t.field(User.email.name, { type: User.email.type })
     t.field(User.countryCode.name, { type: User.countryCode.type })
     t.field(User.phone.name, { type: User.phone.type })
-    t.field(User.userName.name, { type: User.userName.type })
     t.field(User.password.name, { type: User.password.type })
 
     t.list.nonNull.field(User.accounts.name, {
@@ -40,7 +39,6 @@ export const AuthUserType = objectType({
       type: UserProfileType,
     })
 
-    t.field(User.image.name, { type: User.image.type })
     t.boolean("isPassword", {
       resolve: async parent => {
         if (parent.password) {

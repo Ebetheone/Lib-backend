@@ -5,8 +5,8 @@ import { createUserTokens, signEmailToken } from "src/utils/tokenGenerator"
 import { LoginEmailInputType } from "../inputTypes"
 import { AuthVerifyTokenType } from "../types"
 import { CheckSessions, userIncludeDevice } from "utils/sessionCheck"
-import { User, UserDevice } from "generated"
 import { sendCodeMail } from "lib/mail-sender/template"
+import { User, UserDevice } from "@prisma/client"
 
 interface AuthVerifyTokenType {
   accessToken?: string

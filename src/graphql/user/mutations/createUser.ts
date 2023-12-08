@@ -44,11 +44,8 @@ export const CreateUser = mutationField("createUser", {
         password: passwordHash,
         phone: input?.phone,
         countryCode: input?.countryCode,
-        image: input?.image,
         profile: {
           create: {
-            passportNumber: input?.passportNumber,
-            registerNumber: input?.registerNumber,
             firstName: input?.firstName,
             lastName: input?.lastName,
             birthday: input?.birthday,

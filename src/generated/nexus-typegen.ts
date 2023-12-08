@@ -37,6 +37,106 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  AccountEliminateInputType: { // input type
+    email: string; // String!
+    id: string; // ID!
+    password: string; // String!
+  }
+  AuthEmailResetPasswordInput: { // input type
+    email: string; // String!
+    password: string; // String!
+  }
+  AuthEmailVerifyTokenInput: { // input type
+    code: string; // String!
+    email: string; // String!
+    type: NexusGenEnums['TokenVerifyEnum']; // TokenVerifyEnum!
+  }
+  AuthEmailVerifyTokenSenderInput: { // input type
+    email: string; // String!
+  }
+  AuthPhoneResetPasswordInput: { // input type
+    countryCode: string; // String!
+    password: string; // String!
+    phone: string; // String!
+  }
+  AuthPhoneVerifyTokenInput: { // input type
+    code: string; // String!
+    countryCode: string; // String!
+    phone: string; // String!
+    type: NexusGenEnums['TokenVerifyEnum']; // TokenVerifyEnum!
+  }
+  AuthPhoneVerifyTokenSenderInput: { // input type
+    countryCode: string; // String!
+    phone: string; // String!
+  }
+  ExternalAuthAppleInput: { // input type
+    email?: string | null; // String
+    providerId: string; // String!
+    providerName: string; // String!
+  }
+  ExternalAuthInput: { // input type
+    accessToken: string; // String!
+  }
+  ExternalWebAuthInput: { // input type
+    accessToken: string; // String!
+    email?: string | null; // String
+    firstName?: string | null; // String
+    lastName?: string | null; // String
+    phone?: string | null; // String
+    providerId?: string | null; // String
+    providerName?: string | null; // String
+    userUid?: string | null; // String
+  }
+  LoginEmailInput: { // input type
+    deviceId?: string | null; // String
+    email: string; // String!
+    password: string; // String!
+  }
+  LoginPhoneInput: { // input type
+    countryCode?: string | null; // String
+    deviceId?: string | null; // String
+    password: string; // String!
+    phone: string; // String!
+  }
+  RefreshToAccessTokenInput: { // input type
+    refreshToken: string; // String!
+  }
+  RegisterEmailInput: { // input type
+    email: string; // String!
+    password: string; // String!
+  }
+  RegisterPhoneInput: { // input type
+    countryCode?: string | null; // String
+    password: string; // String!
+    phone: string; // String!
+  }
+  UserChangePasswordInput: { // input type
+    newPassword: string; // String!
+    newPasswordConfirm?: string | null; // String
+    password?: string | null; // String
+  }
+  UserInput: { // input type
+    birthday?: NexusGenScalars['DateTime'] | null; // DateTime
+    countryCode?: string | null; // String
+    email?: string | null; // String
+    firstName?: string | null; // String
+    gender?: NexusGenEnums['Gender'] | null; // Gender
+    lastName?: string | null; // String
+    password?: string | null; // String
+    phone?: string | null; // String
+  }
+  UserStatusUpdateInput: { // input type
+    status?: NexusGenEnums['UserStatusEnum'] | null; // UserStatusEnum
+  }
+  UserWhereInput: { // input type
+    email?: string | null; // String
+    firstName?: string | null; // String
+    id?: string | null; // String
+    lastName?: string | null; // String
+    phone?: string | null; // String
+    search?: string | null; // String
+    status?: string | null; // String
+  }
 }
 
 export interface NexusGenEnums {
@@ -60,7 +160,93 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  AuthUserType: { // root type
+    accounts?: NexusGenRootTypes['UserAccount'][] | null; // [UserAccount!]
+    countryCode?: string | null; // String
+    email?: string | null; // String
+    id: string; // ID!
+    password?: string | null; // String
+    phone?: string | null; // String
+    profile?: NexusGenRootTypes['UserProfile'] | null; // UserProfile
+    role?: NexusGenEnums['UserRoleEnum'] | null; // UserRoleEnum
+  }
+  AuthVerifyTokenType: { // root type
+    accessToken?: string | null; // String
+    deviceId?: string | null; // String
+    devices?: Array<NexusGenRootTypes['UserDevice'] | null> | null; // [UserDevice]
+    isEmailConfirmed?: boolean | null; // Boolean
+    isPhoneConfirmed?: boolean | null; // Boolean
+    refreshToken?: string | null; // String
+    resetToken?: string | null; // String
+  }
+  Mutation: {};
   Query: {};
+  RefreshTokenType: { // root type
+    accessToken?: string | null; // String
+    refreshToken?: string | null; // String
+    wsToken?: string | null; // String
+  }
+  User: { // root type
+    accounts?: NexusGenRootTypes['UserAccount'][] | null; // [UserAccount!]
+    countryCode?: string | null; // String
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    devices?: NexusGenRootTypes['UserDevice'][] | null; // [UserDevice!]
+    email?: string | null; // String
+    id: string; // ID!
+    phone?: string | null; // String
+    profile?: NexusGenRootTypes['UserProfile'] | null; // UserProfile
+    role?: NexusGenEnums['UserRoleEnum'] | null; // UserRoleEnum
+    sessions?: NexusGenRootTypes['UserSession'][] | null; // [UserSession!]
+    status?: NexusGenEnums['UserStatusEnum'] | null; // UserStatusEnum
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    userId?: string | null; // String
+  }
+  UserAccount: { // root type
+    accessToken?: string | null; // String
+    accessTokenExpires?: NexusGenScalars['DateTime'] | null; // DateTime
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    id: string; // ID!
+    providerAccountId?: string | null; // String
+    providerId?: string | null; // String
+    providerName?: string | null; // String
+    providerType?: NexusGenEnums['AccountProviderTypeEnum'] | null; // AccountProviderTypeEnum
+    refreshToken?: string | null; // String
+    signedIn: NexusGenScalars['DateTime']; // DateTime!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    user?: NexusGenRootTypes['User'] | null; // User
+    userId?: string | null; // String
+    userUid?: string | null; // String
+  }
+  UserDevice: { // root type
+    deviceName: string; // String!
+    deviceOs: string; // String!
+    deviceType: string; // String!
+    id: string; // ID!
+    sessions?: NexusGenRootTypes['UserSession'][] | null; // [UserSession!]
+  }
+  UserProfile: { // root type
+    birthday?: NexusGenScalars['DateTime'] | null; // DateTime
+    firstName?: string | null; // String
+    gender?: NexusGenEnums['Gender'] | null; // Gender
+    id: string; // ID!
+    lastName?: string | null; // String
+    user?: NexusGenRootTypes['User'] | null; // User
+    userId: string; // String!
+  }
+  UserSession: { // root type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    device?: NexusGenRootTypes['UserDevice'] | null; // UserDevice
+    expires: string; // String!
+    fcmToken?: string | null; // String
+    id: string; // ID!
+    isActive: boolean; // Boolean!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    userId: string; // String!
+  }
+  UsersType: { // root type
+    count?: number | null; // Int
+    data?: NexusGenRootTypes['User'][] | null; // [User!]
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -74,18 +260,325 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
+  AuthUserType: { // field return type
+    accounts: NexusGenRootTypes['UserAccount'][] | null; // [UserAccount!]
+    countryCode: string | null; // String
+    email: string | null; // String
+    id: string; // ID!
+    isPassword: boolean | null; // Boolean
+    password: string | null; // String
+    phone: string | null; // String
+    profile: NexusGenRootTypes['UserProfile'] | null; // UserProfile
+    role: NexusGenEnums['UserRoleEnum'] | null; // UserRoleEnum
+  }
+  AuthVerifyTokenType: { // field return type
+    accessToken: string | null; // String
+    deviceId: string | null; // String
+    devices: Array<NexusGenRootTypes['UserDevice'] | null> | null; // [UserDevice]
+    isEmailConfirmed: boolean | null; // Boolean
+    isPhoneConfirmed: boolean | null; // Boolean
+    refreshToken: string | null; // String
+    resetToken: string | null; // String
+  }
+  Mutation: { // field return type
+    accountEliminate: NexusGenRootTypes['AuthVerifyTokenType'] | null; // AuthVerifyTokenType
+    authEmailForgetPassword: boolean | null; // Boolean
+    authEmailResetPassword: NexusGenRootTypes['AuthVerifyTokenType'] | null; // AuthVerifyTokenType
+    authEmailVerifyToken: NexusGenRootTypes['AuthVerifyTokenType'] | null; // AuthVerifyTokenType
+    authEmailVerifyTokenSender: boolean | null; // Boolean
+    authMobile: NexusGenRootTypes['AuthVerifyTokenType'] | null; // AuthVerifyTokenType
+    authPhoneForgetPassword: boolean | null; // Boolean
+    authPhoneResetPassword: NexusGenRootTypes['AuthVerifyTokenType'] | null; // AuthVerifyTokenType
+    authPhoneVerifyToken: NexusGenRootTypes['AuthVerifyTokenType'] | null; // AuthVerifyTokenType
+    authPhoneVerifyTokenSender: boolean | null; // Boolean
+    authWeb: NexusGenRootTypes['AuthVerifyTokenType'] | null; // AuthVerifyTokenType
+    createUser: NexusGenRootTypes['User'] | null; // User
+    deleteUser: boolean | null; // Boolean
+    loginEmail: NexusGenRootTypes['AuthVerifyTokenType'] | null; // AuthVerifyTokenType
+    loginPhone: NexusGenRootTypes['AuthVerifyTokenType'] | null; // AuthVerifyTokenType
+    logout: boolean | null; // Boolean
+    refreshAccessToken: NexusGenRootTypes['RefreshTokenType'] | null; // RefreshTokenType
+    registerEmail: boolean | null; // Boolean
+    registerPhone: boolean | null; // Boolean
+    updateUser: NexusGenRootTypes['User'] | null; // User
+    userChangePassword: boolean | null; // Boolean
+    userStatusUpdate: boolean | null; // Boolean
+  }
   Query: { // field return type
-    ok: boolean; // Boolean!
+    meAuth: NexusGenRootTypes['AuthUserType'] | null; // AuthUserType
+    user: NexusGenRootTypes['User'] | null; // User
+    users: NexusGenRootTypes['UsersType'] | null; // UsersType
+  }
+  RefreshTokenType: { // field return type
+    accessToken: string | null; // String
+    refreshToken: string | null; // String
+    wsToken: string | null; // String
+  }
+  User: { // field return type
+    accounts: NexusGenRootTypes['UserAccount'][] | null; // [UserAccount!]
+    countryCode: string | null; // String
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    devices: NexusGenRootTypes['UserDevice'][] | null; // [UserDevice!]
+    email: string | null; // String
+    id: string; // ID!
+    phone: string | null; // String
+    profile: NexusGenRootTypes['UserProfile'] | null; // UserProfile
+    role: NexusGenEnums['UserRoleEnum'] | null; // UserRoleEnum
+    sessions: NexusGenRootTypes['UserSession'][] | null; // [UserSession!]
+    status: NexusGenEnums['UserStatusEnum'] | null; // UserStatusEnum
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    userId: string | null; // String
+  }
+  UserAccount: { // field return type
+    accessToken: string | null; // String
+    accessTokenExpires: NexusGenScalars['DateTime'] | null; // DateTime
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    id: string; // ID!
+    providerAccountId: string | null; // String
+    providerId: string | null; // String
+    providerName: string | null; // String
+    providerType: NexusGenEnums['AccountProviderTypeEnum'] | null; // AccountProviderTypeEnum
+    refreshToken: string | null; // String
+    signedIn: NexusGenScalars['DateTime']; // DateTime!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    user: NexusGenRootTypes['User'] | null; // User
+    userId: string | null; // String
+    userUid: string | null; // String
+  }
+  UserDevice: { // field return type
+    deviceName: string; // String!
+    deviceOs: string; // String!
+    deviceType: string; // String!
+    id: string; // ID!
+    sessions: NexusGenRootTypes['UserSession'][] | null; // [UserSession!]
+  }
+  UserProfile: { // field return type
+    birthday: NexusGenScalars['DateTime'] | null; // DateTime
+    firstName: string | null; // String
+    gender: NexusGenEnums['Gender'] | null; // Gender
+    id: string; // ID!
+    lastName: string | null; // String
+    user: NexusGenRootTypes['User'] | null; // User
+    userId: string; // String!
+  }
+  UserSession: { // field return type
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    device: NexusGenRootTypes['UserDevice'] | null; // UserDevice
+    expires: string; // String!
+    fcmToken: string | null; // String
+    id: string; // ID!
+    isActive: boolean; // Boolean!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    userId: string; // String!
+  }
+  UsersType: { // field return type
+    count: number | null; // Int
+    data: NexusGenRootTypes['User'][] | null; // [User!]
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  AuthUserType: { // field return type name
+    accounts: 'UserAccount'
+    countryCode: 'String'
+    email: 'String'
+    id: 'ID'
+    isPassword: 'Boolean'
+    password: 'String'
+    phone: 'String'
+    profile: 'UserProfile'
+    role: 'UserRoleEnum'
+  }
+  AuthVerifyTokenType: { // field return type name
+    accessToken: 'String'
+    deviceId: 'String'
+    devices: 'UserDevice'
+    isEmailConfirmed: 'Boolean'
+    isPhoneConfirmed: 'Boolean'
+    refreshToken: 'String'
+    resetToken: 'String'
+  }
+  Mutation: { // field return type name
+    accountEliminate: 'AuthVerifyTokenType'
+    authEmailForgetPassword: 'Boolean'
+    authEmailResetPassword: 'AuthVerifyTokenType'
+    authEmailVerifyToken: 'AuthVerifyTokenType'
+    authEmailVerifyTokenSender: 'Boolean'
+    authMobile: 'AuthVerifyTokenType'
+    authPhoneForgetPassword: 'Boolean'
+    authPhoneResetPassword: 'AuthVerifyTokenType'
+    authPhoneVerifyToken: 'AuthVerifyTokenType'
+    authPhoneVerifyTokenSender: 'Boolean'
+    authWeb: 'AuthVerifyTokenType'
+    createUser: 'User'
+    deleteUser: 'Boolean'
+    loginEmail: 'AuthVerifyTokenType'
+    loginPhone: 'AuthVerifyTokenType'
+    logout: 'Boolean'
+    refreshAccessToken: 'RefreshTokenType'
+    registerEmail: 'Boolean'
+    registerPhone: 'Boolean'
+    updateUser: 'User'
+    userChangePassword: 'Boolean'
+    userStatusUpdate: 'Boolean'
+  }
   Query: { // field return type name
-    ok: 'Boolean'
+    meAuth: 'AuthUserType'
+    user: 'User'
+    users: 'UsersType'
+  }
+  RefreshTokenType: { // field return type name
+    accessToken: 'String'
+    refreshToken: 'String'
+    wsToken: 'String'
+  }
+  User: { // field return type name
+    accounts: 'UserAccount'
+    countryCode: 'String'
+    createdAt: 'DateTime'
+    devices: 'UserDevice'
+    email: 'String'
+    id: 'ID'
+    phone: 'String'
+    profile: 'UserProfile'
+    role: 'UserRoleEnum'
+    sessions: 'UserSession'
+    status: 'UserStatusEnum'
+    updatedAt: 'DateTime'
+    userId: 'String'
+  }
+  UserAccount: { // field return type name
+    accessToken: 'String'
+    accessTokenExpires: 'DateTime'
+    createdAt: 'DateTime'
+    id: 'ID'
+    providerAccountId: 'String'
+    providerId: 'String'
+    providerName: 'String'
+    providerType: 'AccountProviderTypeEnum'
+    refreshToken: 'String'
+    signedIn: 'DateTime'
+    updatedAt: 'DateTime'
+    user: 'User'
+    userId: 'String'
+    userUid: 'String'
+  }
+  UserDevice: { // field return type name
+    deviceName: 'String'
+    deviceOs: 'String'
+    deviceType: 'String'
+    id: 'ID'
+    sessions: 'UserSession'
+  }
+  UserProfile: { // field return type name
+    birthday: 'DateTime'
+    firstName: 'String'
+    gender: 'Gender'
+    id: 'ID'
+    lastName: 'String'
+    user: 'User'
+    userId: 'String'
+  }
+  UserSession: { // field return type name
+    createdAt: 'DateTime'
+    device: 'UserDevice'
+    expires: 'String'
+    fcmToken: 'String'
+    id: 'ID'
+    isActive: 'Boolean'
+    updatedAt: 'DateTime'
+    userId: 'String'
+  }
+  UsersType: { // field return type name
+    count: 'Int'
+    data: 'User'
   }
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    accountEliminate: { // args
+      input: NexusGenInputs['AccountEliminateInputType']; // AccountEliminateInputType!
+    }
+    authEmailForgetPassword: { // args
+      input: NexusGenInputs['AuthEmailVerifyTokenSenderInput']; // AuthEmailVerifyTokenSenderInput!
+    }
+    authEmailResetPassword: { // args
+      input: NexusGenInputs['AuthEmailResetPasswordInput']; // AuthEmailResetPasswordInput!
+    }
+    authEmailVerifyToken: { // args
+      input: NexusGenInputs['AuthEmailVerifyTokenInput']; // AuthEmailVerifyTokenInput!
+    }
+    authEmailVerifyTokenSender: { // args
+      input: NexusGenInputs['AuthEmailVerifyTokenSenderInput']; // AuthEmailVerifyTokenSenderInput!
+    }
+    authMobile: { // args
+      appleInput?: NexusGenInputs['ExternalAuthAppleInput'] | null; // ExternalAuthAppleInput
+      input: NexusGenInputs['ExternalAuthInput']; // ExternalAuthInput!
+      provider: string; // String!
+    }
+    authPhoneForgetPassword: { // args
+      input: NexusGenInputs['AuthPhoneVerifyTokenSenderInput']; // AuthPhoneVerifyTokenSenderInput!
+    }
+    authPhoneResetPassword: { // args
+      input: NexusGenInputs['AuthPhoneResetPasswordInput']; // AuthPhoneResetPasswordInput!
+    }
+    authPhoneVerifyToken: { // args
+      input: NexusGenInputs['AuthPhoneVerifyTokenInput']; // AuthPhoneVerifyTokenInput!
+    }
+    authPhoneVerifyTokenSender: { // args
+      input: NexusGenInputs['AuthPhoneVerifyTokenSenderInput']; // AuthPhoneVerifyTokenSenderInput!
+    }
+    authWeb: { // args
+      input: NexusGenInputs['ExternalWebAuthInput']; // ExternalWebAuthInput!
+    }
+    createUser: { // args
+      input: NexusGenInputs['UserInput']; // UserInput!
+    }
+    deleteUser: { // args
+      userId: string; // String!
+    }
+    loginEmail: { // args
+      input: NexusGenInputs['LoginEmailInput']; // LoginEmailInput!
+    }
+    loginPhone: { // args
+      input: NexusGenInputs['LoginPhoneInput']; // LoginPhoneInput!
+    }
+    logout: { // args
+      deviceId?: string | null; // String
+    }
+    refreshAccessToken: { // args
+      input?: NexusGenInputs['RefreshToAccessTokenInput'] | null; // RefreshToAccessTokenInput
+    }
+    registerEmail: { // args
+      input: NexusGenInputs['RegisterEmailInput']; // RegisterEmailInput!
+    }
+    registerPhone: { // args
+      input: NexusGenInputs['RegisterPhoneInput']; // RegisterPhoneInput!
+    }
+    updateUser: { // args
+      id: string; // String!
+      input: NexusGenInputs['UserInput']; // UserInput!
+    }
+    userChangePassword: { // args
+      input: NexusGenInputs['UserChangePasswordInput']; // UserChangePasswordInput!
+    }
+    userStatusUpdate: { // args
+      id: string; // String!
+      input: NexusGenInputs['UserStatusUpdateInput']; // UserStatusUpdateInput!
+    }
+  }
+  Query: {
+    user: { // args
+      input?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
+    }
+    users: { // args
+      input?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
+      orderBy?: string | null; // String
+      skip: number; // Int!
+      take: number; // Int!
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {
@@ -96,7 +589,7 @@ export interface NexusGenTypeInterfaces {
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = keyof NexusGenInputs;
 
 export type NexusGenEnumNames = keyof NexusGenEnums;
 

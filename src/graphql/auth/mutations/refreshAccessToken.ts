@@ -24,20 +24,24 @@ export const RefreshAccessToken = mutationField("refreshAccessToken", {
     else if (tokens.refreshToken) _refreshToken = tokens.refreshToken
 
     if (_refreshToken)
-      jwt.verify(_refreshToken, ENV.JWT_SECRET, function (err, decoded) {
-        if (err) {
-          if (err.message === "jwt expired")
-            throw Errors.Auth.REFRESH_TOKEN_EXPIRED()
-          if (err.message === "invalid token") {
-            throw Errors.Auth.REFRESH_TOKEN_INVALID()
+      jwt.verify(
+        _refreshToken,
+        ENV.JWT_SECRET,
+        function (err: any, decoded: any) {
+          if (err) {
+            if (err.message === "jwt expired")
+              throw Errors.Auth.REFRESH_TOKEN_EXPIRED()
+            if (err.message === "invalid token") {
+              throw Errors.Auth.REFRESH_TOKEN_INVALID()
+            }
+            if (err.message === "invalid signature") {
+              throw Errors.Auth.REFRESH_TOKEN_INVALID()
+            }
+            console.log("RefreshAccessToken === catch err", err)
           }
-          if (err.message === "invalid signature") {
-            throw Errors.Auth.REFRESH_TOKEN_INVALID()
-          }
-          console.log("RefreshAccessToken === catch err", err)
-        }
-        tokenJson = decoded as signRefreshTokenType
-      })
+          tokenJson = decoded as signRefreshTokenType
+        },
+      )
     if (tokenJson?.userId) {
       const user = await getUser(tokenJson?.userId)
       const { refreshToken: newRefreshToken, accessToken: newAccessToken } =

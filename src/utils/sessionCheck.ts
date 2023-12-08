@@ -1,4 +1,3 @@
-import { User } from "generated"
 import { Context } from "lib/context"
 import { Errors } from "src/errors"
 import { getExpiresDate } from "utils/dateFounder"
@@ -13,7 +12,7 @@ export const userIncludeDevice = {
 
 export const CheckSessions = async (
   ctx: Context,
-  user: User,
+  user: any,
   deviceId: string,
 ) => {
   let deviceList
@@ -24,7 +23,7 @@ export const CheckSessions = async (
   }
 
   const existingUserDevice = user?.devices?.find(
-    e =>
+    (e: any) =>
       e.id === deviceId &&
       e.deviceName === ctx.device.name &&
       e.deviceOs === ctx.device.osName &&
@@ -91,7 +90,7 @@ export const CheckSessions = async (
     return (deviceId = device.id)
   } else {
     deviceList =
-      user?.devices?.map(e => ({
+      user?.devices?.map((e: any) => ({
         id: e.id,
         deviceName: e.deviceName,
         deviceOs: e.deviceOs,
