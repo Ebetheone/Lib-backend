@@ -91,7 +91,7 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "engines": {
-    "node": "20.x",
+    "node": "18.x",
     "yarn": "1.22.x"
   }
 }
