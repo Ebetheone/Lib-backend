@@ -38,6 +38,15 @@ export enum AccountProviderTypeEnum {
   TWITTER = "TWITTER",
 }
 
+export type Address = {
+  __typename?: "Address"
+  address1: Scalars["String"]
+  address2: Scalars["String"]
+  city: Scalars["String"]
+  district: Scalars["String"]
+  id: Scalars["ID"]
+}
+
 export type AuthEmailResetPasswordInput = {
   email: Scalars["String"]
   password: Scalars["String"]
@@ -387,6 +396,7 @@ export enum TokenVerifyEnum {
 export type User = {
   __typename?: "User"
   accounts?: Maybe<Array<UserAccount>>
+  address?: Maybe<Address>
   countryCode?: Maybe<Scalars["String"]>
   createdAt: Scalars["DateTime"]
   devices?: Maybe<Array<UserDevice>>
@@ -435,8 +445,12 @@ export type UserDevice = {
 }
 
 export type UserInput = {
+  address1: Scalars["String"]
+  address2: Scalars["String"]
   birthday?: InputMaybe<Scalars["DateTime"]>
+  city: Scalars["String"]
   countryCode?: InputMaybe<Scalars["String"]>
+  district: Scalars["String"]
   email?: InputMaybe<Scalars["String"]>
   firstName?: InputMaybe<Scalars["String"]>
   gender?: InputMaybe<Gender>

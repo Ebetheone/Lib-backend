@@ -1,6 +1,6 @@
 import { UserStatusEnumType } from "src/graphql/enumTypes"
 import { inputObjectType } from "nexus"
-import { User, UserProfile } from "nexus-prisma"
+import { Address, User, UserProfile } from "nexus-prisma"
 
 export const UserInputType = inputObjectType({
   name: "UserInput",
@@ -11,6 +11,10 @@ export const UserInputType = inputObjectType({
     t.field(UserProfile.firstName)
     t.field(UserProfile.lastName)
     t.field(UserProfile.birthday)
+    t.field(Address.city)
+    t.field(Address.district)
+    t.field(Address.address1)
+    t.field(Address.address2)
     t.nullable.field(UserProfile.gender)
     t.field(User.password)
   },

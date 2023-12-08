@@ -136,8 +136,12 @@ export interface NexusGenInputs {
     password?: string | null; // String
   }
   UserInput: { // input type
+    address1: string; // String!
+    address2: string; // String!
     birthday?: NexusGenScalars['DateTime'] | null; // DateTime
+    city: string; // String!
     countryCode?: string | null; // String
+    district: string; // String!
     email?: string | null; // String
     firstName?: string | null; // String
     gender?: NexusGenEnums['Gender'] | null; // Gender
@@ -180,6 +184,13 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Address: { // root type
+    address1: string; // String!
+    address2: string; // String!
+    city: string; // String!
+    district: string; // String!
+    id: string; // ID!
+  }
   AuthUserType: { // root type
     accounts?: NexusGenRootTypes['UserAccount'][] | null; // [UserAccount!]
     countryCode?: string | null; // String
@@ -227,6 +238,7 @@ export interface NexusGenObjects {
   }
   User: { // root type
     accounts?: NexusGenRootTypes['UserAccount'][] | null; // [UserAccount!]
+    address?: NexusGenRootTypes['Address'] | null; // Address
     countryCode?: string | null; // String
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     devices?: NexusGenRootTypes['UserDevice'][] | null; // [UserDevice!]
@@ -299,6 +311,13 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
+  Address: { // field return type
+    address1: string; // String!
+    address2: string; // String!
+    city: string; // String!
+    district: string; // String!
+    id: string; // ID!
+  }
   AuthUserType: { // field return type
     accounts: NexusGenRootTypes['UserAccount'][] | null; // [UserAccount!]
     countryCode: string | null; // String
@@ -379,6 +398,7 @@ export interface NexusGenFieldTypes {
   }
   User: { // field return type
     accounts: NexusGenRootTypes['UserAccount'][] | null; // [UserAccount!]
+    address: NexusGenRootTypes['Address'] | null; // Address
     countryCode: string | null; // String
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     devices: NexusGenRootTypes['UserDevice'][] | null; // [UserDevice!]
@@ -441,6 +461,13 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
+  Address: { // field return type name
+    address1: 'String'
+    address2: 'String'
+    city: 'String'
+    district: 'String'
+    id: 'ID'
+  }
   AuthUserType: { // field return type name
     accounts: 'UserAccount'
     countryCode: 'String'
@@ -521,6 +548,7 @@ export interface NexusGenFieldTypeNames {
   }
   User: { // field return type name
     accounts: 'UserAccount'
+    address: 'Address'
     countryCode: 'String'
     createdAt: 'DateTime'
     devices: 'UserDevice'

@@ -5,7 +5,7 @@ const prisma = new PrismaClient()
 
 async function main() {
   console.log(`Start seeding ...`)
-  // await userSeed()
+  await userSeed()
   await bookSeed()
   console.log(`Seeding finished.`)
 }

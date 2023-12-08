@@ -40,6 +40,23 @@ export const UpdateUser = mutationField("updateUser", {
             },
           },
         },
+        address: {
+          upsert: {
+            where: { userId: id },
+            create: {
+              city: input?.city,
+              district: input?.district,
+              address1: input?.address1,
+              address2: input?.address2,
+            },
+            update: {
+              city: input?.city,
+              district: input?.district,
+              address1: input?.address1,
+              address2: input?.address2,
+            },
+          },
+        },
       },
     })
 

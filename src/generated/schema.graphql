@@ -18,6 +18,14 @@ enum AccountProviderTypeEnum {
   TWITTER
 }
 
+type Address {
+  address1: String!
+  address2: String!
+  city: String!
+  district: String!
+  id: ID!
+}
+
 input AuthEmailResetPasswordInput {
   email: String!
   password: String!
@@ -242,6 +250,7 @@ enum TokenVerifyEnum {
 
 type User {
   accounts: [UserAccount!]
+  address: Address
   countryCode: String
   createdAt: DateTime!
   devices: [UserDevice!]
@@ -288,8 +297,12 @@ type UserDevice {
 }
 
 input UserInput {
+  address1: String!
+  address2: String!
   birthday: DateTime
+  city: String!
   countryCode: String
+  district: String!
   email: String
   firstName: String
   gender: Gender

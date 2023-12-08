@@ -14,7 +14,12 @@ export const User = queryField("user", {
 
     const _where: Prisma.UserWhereInput = {}
 
-    if (input?.id) _where.id = input?.id
+    if (input?.id) {
+      _where.id = input?.id
+    } else {
+      _where.id = ctx.user?.id
+    }
+
     if (input?.phone) _where.phone = input?.phone
     if (input?.email) _where.email = input?.email
     if (input?.search)
@@ -27,7 +32,7 @@ export const User = queryField("user", {
 
     const user = await ctx.prisma.user.findFirst({
       where: { ..._where, ...accessibleBy(ctx.ability, "read", "User") },
-      include: { profile: true },
+      include: { profile: true, address: true },
     })
 
     return user

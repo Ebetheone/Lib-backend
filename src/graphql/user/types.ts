@@ -10,6 +10,7 @@ import {
   UserSession,
   UserProfile,
   UserDevice,
+  Address,
 } from "nexus-prisma"
 
 export const UsersType = objectType({
@@ -42,6 +43,9 @@ export const UserType = objectType({
     })
     t.field(User.profile.name, {
       type: UserProfileType,
+    })
+    t.field(User.address.name, {
+      type: AddressType,
     })
 
     t.field(User.email)
@@ -126,5 +130,17 @@ export const UserProfileType = objectType({
     t.field(UserProfile.birthday)
 
     t.field(UserProfile.user.name, { type: UserType })
+  },
+})
+
+export const AddressType = objectType({
+  name: Address.$name,
+  description: Address.$description,
+  definition(t) {
+    t.field(Address.id)
+    t.field(Address.city)
+    t.field(Address.district)
+    t.field(Address.address1)
+    t.field(Address.address2)
   },
 })

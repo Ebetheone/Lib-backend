@@ -34,6 +34,7 @@ export const Users = queryField("users", {
       where: { ..._where, ...accessibleBy(ctx.ability, "read", "User") },
       include: {
         profile: true,
+        address: true,
       },
       orderBy: buildOrderBy(orderBy || null || undefined),
       take,
