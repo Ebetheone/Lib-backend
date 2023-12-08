@@ -72,9 +72,11 @@ export interface NexusGenInputs {
   BookInput: { // input type
     bestSeller: boolean; // Boolean!
     category: string; // String!
+    image?: string | null; // String
     limit: number; // Int!
     name: string; // String!
     price: number; // Int!
+    publisher: string; // String!
   }
   BookWhereInput: { // input type
     bestSeller?: boolean | null; // Boolean
@@ -84,6 +86,7 @@ export interface NexusGenInputs {
     limit?: number | null; // Int
     name?: string | null; // String
     price?: number | null; // Int
+    publisher?: string | null; // String
     search?: string | null; // String
   }
   ExternalAuthAppleInput: { // input type
@@ -202,9 +205,11 @@ export interface NexusGenObjects {
     category: string; // String!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // ID!
+    image?: string | null; // String
     limit: number; // Int!
     name: string; // String!
     price: number; // Int!
+    publisher: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     user?: NexusGenRootTypes['User'] | null; // User
     userId: string; // String!
@@ -320,9 +325,11 @@ export interface NexusGenFieldTypes {
     category: string; // String!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // ID!
+    image: string | null; // String
     limit: number; // Int!
     name: string; // String!
     price: number; // Int!
+    publisher: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     user: NexusGenRootTypes['User'] | null; // User
     userId: string; // String!
@@ -460,9 +467,11 @@ export interface NexusGenFieldTypeNames {
     category: 'String'
     createdAt: 'DateTime'
     id: 'ID'
+    image: 'String'
     limit: 'Int'
     name: 'String'
     price: 'Int'
+    publisher: 'String'
     updatedAt: 'DateTime'
     user: 'User'
     userId: 'String'
@@ -658,7 +667,7 @@ export interface NexusGenArgTypes {
   }
   Query: {
     book: { // args
-      input?: NexusGenInputs['BookWhereInput'] | null; // BookWhereInput
+      id: string; // String!
     }
     books: { // args
       input?: NexusGenInputs['BookWhereInput'] | null; // BookWhereInput

@@ -79,9 +79,11 @@ type Book {
   category: String!
   createdAt: DateTime!
   id: ID!
+  image: String
   limit: Int!
   name: String!
   price: Int!
+  publisher: String!
   updatedAt: DateTime!
   user: User
   userId: String!
@@ -90,9 +92,11 @@ type Book {
 input BookInput {
   bestSeller: Boolean!
   category: String!
+  image: String
   limit: Int!
   name: String!
   price: Int!
+  publisher: String!
 }
 
 input BookWhereInput {
@@ -103,6 +107,7 @@ input BookWhereInput {
   limit: Int
   name: String
   price: Int
+  publisher: String
   search: String
 }
 
@@ -197,7 +202,7 @@ type Mutation {
 }
 
 type Query {
-  book(input: BookWhereInput): Book
+  book(id: String!): Book
   books(input: BookWhereInput, orderBy: String, skip: Int!, take: Int!): BooksType
   meAuth: AuthUserType
   user(input: UserWhereInput): User

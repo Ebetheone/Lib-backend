@@ -23,10 +23,9 @@ export const LoginEmail = mutationField("loginEmail", {
     input: nonNull(arg({ type: LoginEmailInputType })),
   },
   resolve: async (_root, { input }, ctx) => {
-    const user = await ctx.prisma.user.findFirst({
-      where: {
-        email: input.email,
-      },
+    console.log("input", input)
+    const user = await ctx.prisma.user.findUnique({
+      where: { email: input.email },
       include: userIncludeDevice,
     })
 
@@ -38,12 +37,8 @@ export const LoginEmail = mutationField("loginEmail", {
       const emailVerifyToken = signEmailToken({ email: input.email, code })
 
       const userCode = await ctx.prisma.user.update({
-        where: {
-          email: input.email,
-        },
-        data: {
-          emailConfirmCode: emailVerifyToken,
-        },
+        where: { email: input.email },
+        data: { emailConfirmCode: emailVerifyToken },
       })
       if (userCode.email) {
         sendCodeMail(userCode.email, code)

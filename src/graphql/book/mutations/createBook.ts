@@ -22,6 +22,8 @@ export const CreateBook = mutationField("createBook", {
         limit: input.limit,
         category: input.category,
         price: input.price,
+        publisher: input.publisher,
+        image: input.image || "",
         bestSeller: input?.bestSeller || false,
         user: { connect: { id: ctx.user.id } },
         createdUserId: ctx.user.id,

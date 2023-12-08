@@ -8,6 +8,8 @@ export const BookInputType = inputObjectType({
     t.nonNull.field(Book.limit)
     t.nonNull.field(Book.category)
     t.nonNull.field(Book.price)
+    t.nonNull.field(Book.publisher)
+    t.nullable.field(Book.image)
     t.nullable.field(Book.bestSeller)
   },
 })

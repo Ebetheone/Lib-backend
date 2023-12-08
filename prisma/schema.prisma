@@ -160,6 +160,9 @@ model Book {
   category String
   price    Int
 
+  image     String?
+  publisher String
+
   bestSeller Boolean @default(false)
 
   user   User   @relation(fields: [userId], references: [id])

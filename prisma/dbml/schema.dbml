@@ -98,6 +98,8 @@ Table Book {
   limit Int [not null]
   category String [not null]
   price Int [not null]
+  image String
+  publisher String [not null]
   bestSeller Boolean [not null, default: false]
   user User [not null]
   userId String [not null]

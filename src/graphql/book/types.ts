@@ -23,6 +23,9 @@ export const BookType = objectType({
     t.field(Book.price)
     t.field(Book.bestSeller)
 
+    t.field(Book.publisher)
+    t.field(Book.image)
+
     t.field(Book.userId)
     t.field(Book.user.name, { type: UserType })
 

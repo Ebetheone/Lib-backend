@@ -102,9 +102,11 @@ export type Book = {
   category: Scalars["String"]
   createdAt: Scalars["DateTime"]
   id: Scalars["ID"]
+  image?: Maybe<Scalars["String"]>
   limit: Scalars["Int"]
   name: Scalars["String"]
   price: Scalars["Int"]
+  publisher: Scalars["String"]
   updatedAt: Scalars["DateTime"]
   user?: Maybe<User>
   userId: Scalars["String"]
@@ -113,9 +115,11 @@ export type Book = {
 export type BookInput = {
   bestSeller: Scalars["Boolean"]
   category: Scalars["String"]
+  image?: InputMaybe<Scalars["String"]>
   limit: Scalars["Int"]
   name: Scalars["String"]
   price: Scalars["Int"]
+  publisher: Scalars["String"]
 }
 
 export type BookWhereInput = {
@@ -126,6 +130,7 @@ export type BookWhereInput = {
   limit?: InputMaybe<Scalars["Int"]>
   name?: InputMaybe<Scalars["String"]>
   price?: InputMaybe<Scalars["Int"]>
+  publisher?: InputMaybe<Scalars["String"]>
   search?: InputMaybe<Scalars["String"]>
 }
 
@@ -326,7 +331,7 @@ export type Query = {
 }
 
 export type QueryBookArgs = {
-  input?: InputMaybe<BookWhereInput>
+  id: Scalars["String"]
 }
 
 export type QueryBooksArgs = {

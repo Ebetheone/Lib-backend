@@ -1,11 +1,14 @@
 model Book {
-    id String @id @default(auto()) @map("_id") @db.ObjectId
+    id     String  @id @default(auto()) @map("_id") @db.ObjectId
     bookId String? @db.ObjectId
 
     name     String
     limit    Int
     category String
     price    Int
+
+    image     String?
+    publisher String
 
     bestSeller Boolean @default(false)
 

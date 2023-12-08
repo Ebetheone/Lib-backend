@@ -10,6 +10,7 @@ export const BookWhereInputType = inputObjectType({
     t.nullable.string(Book.name.name)
     t.nullable.int(Book.limit.name)
     t.nullable.string(Book.category.name)
+    t.nullable.string(Book.publisher.name)
     t.nullable.int(Book.price.name)
     t.nullable.boolean(Book.bestSeller.name)
   },

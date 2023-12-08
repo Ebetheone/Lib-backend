@@ -1,11 +1,12 @@
 import { PrismaClient } from "@prisma/client"
-import { userSeed } from "./seed/function"
+import { bookSeed, userSeed } from "./seed/function"
 
 const prisma = new PrismaClient()
 
 async function main() {
   console.log(`Start seeding ...`)
-  await userSeed()
+  // await userSeed()
+  await bookSeed()
   console.log(`Seeding finished.`)
 }
 

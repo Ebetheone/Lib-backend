@@ -23,6 +23,7 @@ export const Books = queryField("books", {
     if (input?.name) _where.name = input?.name
     if (input?.limit) _where.limit = input?.limit
     if (input?.category) _where.category = input?.category
+    if (input?.publisher) _where.publisher = input?.publisher
     if (input?.price) _where.price = input?.price
     if (input?.bestSeller) _where.bestSeller = input?.bestSeller
 
