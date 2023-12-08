@@ -69,6 +69,23 @@ export interface NexusGenInputs {
     countryCode: string; // String!
     phone: string; // String!
   }
+  BookInput: { // input type
+    bestSeller: boolean; // Boolean!
+    category: string; // String!
+    limit: number; // Int!
+    name: string; // String!
+    price: number; // Int!
+  }
+  BookWhereInput: { // input type
+    bestSeller?: boolean | null; // Boolean
+    bookId?: string | null; // String
+    category?: string | null; // String
+    id?: string | null; // String
+    limit?: number | null; // Int
+    name?: string | null; // String
+    price?: number | null; // Int
+    search?: string | null; // String
+  }
   ExternalAuthAppleInput: { // input type
     email?: string | null; // String
     providerId: string; // String!
@@ -179,6 +196,23 @@ export interface NexusGenObjects {
     refreshToken?: string | null; // String
     resetToken?: string | null; // String
   }
+  Book: { // root type
+    bestSeller: boolean; // Boolean!
+    bookId?: string | null; // String
+    category: string; // String!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    id: string; // ID!
+    limit: number; // Int!
+    name: string; // String!
+    price: number; // Int!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    user?: NexusGenRootTypes['User'] | null; // User
+    userId: string; // String!
+  }
+  BooksType: { // root type
+    count?: number | null; // Int
+    data?: NexusGenRootTypes['Book'][] | null; // [Book!]
+  }
   Mutation: {};
   Query: {};
   RefreshTokenType: { // root type
@@ -280,6 +314,23 @@ export interface NexusGenFieldTypes {
     refreshToken: string | null; // String
     resetToken: string | null; // String
   }
+  Book: { // field return type
+    bestSeller: boolean; // Boolean!
+    bookId: string | null; // String
+    category: string; // String!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
+    id: string; // ID!
+    limit: number; // Int!
+    name: string; // String!
+    price: number; // Int!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
+    user: NexusGenRootTypes['User'] | null; // User
+    userId: string; // String!
+  }
+  BooksType: { // field return type
+    count: number | null; // Int
+    data: NexusGenRootTypes['Book'][] | null; // [Book!]
+  }
   Mutation: { // field return type
     accountEliminate: NexusGenRootTypes['AuthVerifyTokenType'] | null; // AuthVerifyTokenType
     authEmailForgetPassword: boolean | null; // Boolean
@@ -292,7 +343,9 @@ export interface NexusGenFieldTypes {
     authPhoneVerifyToken: NexusGenRootTypes['AuthVerifyTokenType'] | null; // AuthVerifyTokenType
     authPhoneVerifyTokenSender: boolean | null; // Boolean
     authWeb: NexusGenRootTypes['AuthVerifyTokenType'] | null; // AuthVerifyTokenType
+    createBook: NexusGenRootTypes['Book'] | null; // Book
     createUser: NexusGenRootTypes['User'] | null; // User
+    deleteBook: boolean | null; // Boolean
     deleteUser: boolean | null; // Boolean
     loginEmail: NexusGenRootTypes['AuthVerifyTokenType'] | null; // AuthVerifyTokenType
     loginPhone: NexusGenRootTypes['AuthVerifyTokenType'] | null; // AuthVerifyTokenType
@@ -300,11 +353,14 @@ export interface NexusGenFieldTypes {
     refreshAccessToken: NexusGenRootTypes['RefreshTokenType'] | null; // RefreshTokenType
     registerEmail: boolean | null; // Boolean
     registerPhone: boolean | null; // Boolean
+    updateBook: NexusGenRootTypes['Book'] | null; // Book
     updateUser: NexusGenRootTypes['User'] | null; // User
     userChangePassword: boolean | null; // Boolean
     userStatusUpdate: boolean | null; // Boolean
   }
   Query: { // field return type
+    book: NexusGenRootTypes['Book'] | null; // Book
+    books: NexusGenRootTypes['BooksType'] | null; // BooksType
     meAuth: NexusGenRootTypes['AuthUserType'] | null; // AuthUserType
     user: NexusGenRootTypes['User'] | null; // User
     users: NexusGenRootTypes['UsersType'] | null; // UsersType
@@ -398,6 +454,23 @@ export interface NexusGenFieldTypeNames {
     refreshToken: 'String'
     resetToken: 'String'
   }
+  Book: { // field return type name
+    bestSeller: 'Boolean'
+    bookId: 'String'
+    category: 'String'
+    createdAt: 'DateTime'
+    id: 'ID'
+    limit: 'Int'
+    name: 'String'
+    price: 'Int'
+    updatedAt: 'DateTime'
+    user: 'User'
+    userId: 'String'
+  }
+  BooksType: { // field return type name
+    count: 'Int'
+    data: 'Book'
+  }
   Mutation: { // field return type name
     accountEliminate: 'AuthVerifyTokenType'
     authEmailForgetPassword: 'Boolean'
@@ -410,7 +483,9 @@ export interface NexusGenFieldTypeNames {
     authPhoneVerifyToken: 'AuthVerifyTokenType'
     authPhoneVerifyTokenSender: 'Boolean'
     authWeb: 'AuthVerifyTokenType'
+    createBook: 'Book'
     createUser: 'User'
+    deleteBook: 'Boolean'
     deleteUser: 'Boolean'
     loginEmail: 'AuthVerifyTokenType'
     loginPhone: 'AuthVerifyTokenType'
@@ -418,11 +493,14 @@ export interface NexusGenFieldTypeNames {
     refreshAccessToken: 'RefreshTokenType'
     registerEmail: 'Boolean'
     registerPhone: 'Boolean'
+    updateBook: 'Book'
     updateUser: 'User'
     userChangePassword: 'Boolean'
     userStatusUpdate: 'Boolean'
   }
   Query: { // field return type name
+    book: 'Book'
+    books: 'BooksType'
     meAuth: 'AuthUserType'
     user: 'User'
     users: 'UsersType'
@@ -532,8 +610,14 @@ export interface NexusGenArgTypes {
     authWeb: { // args
       input: NexusGenInputs['ExternalWebAuthInput']; // ExternalWebAuthInput!
     }
+    createBook: { // args
+      input: NexusGenInputs['BookInput']; // BookInput!
+    }
     createUser: { // args
       input: NexusGenInputs['UserInput']; // UserInput!
+    }
+    deleteBook: { // args
+      bookId: string; // String!
     }
     deleteUser: { // args
       userId: string; // String!
@@ -556,6 +640,10 @@ export interface NexusGenArgTypes {
     registerPhone: { // args
       input: NexusGenInputs['RegisterPhoneInput']; // RegisterPhoneInput!
     }
+    updateBook: { // args
+      id: string; // String!
+      input: NexusGenInputs['BookInput']; // BookInput!
+    }
     updateUser: { // args
       id: string; // String!
       input: NexusGenInputs['UserInput']; // UserInput!
@@ -569,6 +657,15 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    book: { // args
+      input?: NexusGenInputs['BookWhereInput'] | null; // BookWhereInput
+    }
+    books: { // args
+      input?: NexusGenInputs['BookWhereInput'] | null; // BookWhereInput
+      orderBy?: string | null; // String
+      skip: number; // Int!
+      take: number; // Int!
+    }
     user: { // args
       input?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
     }

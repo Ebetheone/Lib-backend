@@ -73,6 +73,44 @@ type AuthVerifyTokenType {
   resetToken: String
 }
 
+type Book {
+  bestSeller: Boolean!
+  bookId: String
+  category: String!
+  createdAt: DateTime!
+  id: ID!
+  limit: Int!
+  name: String!
+  price: Int!
+  updatedAt: DateTime!
+  user: User
+  userId: String!
+}
+
+input BookInput {
+  bestSeller: Boolean!
+  category: String!
+  limit: Int!
+  name: String!
+  price: Int!
+}
+
+input BookWhereInput {
+  bestSeller: Boolean
+  bookId: String
+  category: String
+  id: String
+  limit: Int
+  name: String
+  price: Int
+  search: String
+}
+
+type BooksType {
+  count: Int
+  data: [Book!]
+}
+
 """
 A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
@@ -142,7 +180,9 @@ type Mutation {
   authPhoneVerifyToken(input: AuthPhoneVerifyTokenInput!): AuthVerifyTokenType
   authPhoneVerifyTokenSender(input: AuthPhoneVerifyTokenSenderInput!): Boolean
   authWeb(input: ExternalWebAuthInput!): AuthVerifyTokenType
+  createBook(input: BookInput!): Book
   createUser(input: UserInput!): User
+  deleteBook(bookId: String!): Boolean
   deleteUser(userId: String!): Boolean
   loginEmail(input: LoginEmailInput!): AuthVerifyTokenType
   loginPhone(input: LoginPhoneInput!): AuthVerifyTokenType
@@ -150,12 +190,15 @@ type Mutation {
   refreshAccessToken(input: RefreshToAccessTokenInput): RefreshTokenType
   registerEmail(input: RegisterEmailInput!): Boolean
   registerPhone(input: RegisterPhoneInput!): Boolean
+  updateBook(id: String!, input: BookInput!): Book
   updateUser(id: String!, input: UserInput!): User
   userChangePassword(input: UserChangePasswordInput!): Boolean
   userStatusUpdate(id: String!, input: UserStatusUpdateInput!): Boolean
 }
 
 type Query {
+  book(input: BookWhereInput): Book
+  books(input: BookWhereInput, orderBy: String, skip: Int!, take: Int!): BooksType
   meAuth: AuthUserType
   user(input: UserWhereInput): User
   users(input: UserWhereInput, orderBy: String, skip: Int!, take: Int!): UsersType

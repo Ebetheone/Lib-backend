@@ -1,4 +1,5 @@
 export * from "./auth"
+export * from "./book"
 export * from "./user"
 export * from "./common"
 export * from "./enumTypes"

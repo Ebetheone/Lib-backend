@@ -1,8 +1,9 @@
 import { AbilityBuilder, PureAbility } from "@casl/ability"
 import { Subjects } from "@casl/prisma"
-import { User } from "@prisma/client"
+import { User, Book } from "@prisma/client"
 import { PrismaMutation, PrismaQuery, createPrismaAbility } from "lib/casl"
 import { userPermissions } from "graphql/user"
+import { bookPermissions } from "graphql/book"
 
 export type Actions = "manage" | "create" | "read" | "update" | "delete"
 
@@ -10,6 +11,7 @@ type AppSubjects =
   | "all"
   | Subjects<{
       User: User
+      Book: Book
     }>
 
 export type AppAbility = PureAbility<
@@ -33,6 +35,7 @@ export function defineAbilitiesFor(ctx: CaslContextType) {
   )
 
   userPermissions(ctx, can, cannot)
+  bookPermissions(ctx, can, cannot)
 
   return build()
 }

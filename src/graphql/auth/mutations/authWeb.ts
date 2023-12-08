@@ -31,8 +31,6 @@ export const AuthWeb = mutationField("authWeb", {
 
     const resultVerify = await getAuth().verifyIdToken(input.accessToken, true)
     const userCreate = {
-      userName: resultVerify.name || input.userName || undefined,
-      image: resultVerify.picture || input.image || undefined,
       email:
         resultVerify.email === input?.email
           ? resultVerify.email
