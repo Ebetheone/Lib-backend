@@ -7,7 +7,6 @@ import { PubSub } from "graphql-subscriptions"
 import { verify } from "jsonwebtoken"
 import { isEmpty } from "lodash"
 import { ENV } from "src/config"
-import { AppAbility, defineAbilitiesFor } from "src/lib/casl/ability"
 import { prisma } from "src/lib/prisma"
 import { getContextUser, getUser } from "src/utils/auth"
 
@@ -24,7 +23,6 @@ export interface Context {
   prisma: PrismaClient
   pubsub: PubSub
   user: User | null
-  ability: AppAbility
   device: DeviceProps
 }
 
@@ -63,17 +61,12 @@ export async function createContext(
       ? await getContextUser(req)
       : null
 
-  const ability = defineAbilitiesFor({
-    user: user,
-  })
-
   return {
     prisma,
     pubsub,
     req,
     res,
     user,
-    ability,
     device,
   }
 }

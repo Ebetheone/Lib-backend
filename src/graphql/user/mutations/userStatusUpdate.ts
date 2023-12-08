@@ -1,6 +1,5 @@
 import { arg, mutationField, nonNull, stringArg } from "nexus"
 import { UserStatusUpdateInputType } from "../inputTypes"
-import { accessibleBy } from "lib/casl"
 
 export const UserStatusUpdate = mutationField("userStatusUpdate", {
   type: "Boolean",
@@ -9,10 +8,8 @@ export const UserStatusUpdate = mutationField("userStatusUpdate", {
     input: nonNull(arg({ type: UserStatusUpdateInputType })),
   },
   resolve: async (_, { id, input }, ctx) => {
-    accessibleBy(ctx.ability, "update", "User")
-
     const user = await ctx.prisma.user.update({
-      where: { id, ...accessibleBy(ctx.ability, "update", "User") },
+      where: { id },
       data: input,
       select: { id: true },
     })

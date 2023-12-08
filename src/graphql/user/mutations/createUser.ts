@@ -4,7 +4,6 @@ import { UserType } from "../types"
 import { UserInputType } from "../inputTypes"
 import { Errors } from "src/errors"
 import { generateUniqueId } from "utils/generateUniqueId"
-import { accessibleBy } from "lib/casl"
 import { generateRandomPassword } from "utils/generateRandomPassword"
 import { Gender } from "@prisma/client"
 
@@ -14,8 +13,6 @@ export const CreateUser = mutationField("createUser", {
     input: nonNull(arg({ type: UserInputType })),
   },
   resolve: async (_root, { input }, ctx) => {
-    accessibleBy(ctx.ability, "create", "User")
-
     const checkEmail = await ctx.prisma.user.findFirst({
       where: { email: input?.email },
       select: { id: true },
@@ -52,7 +49,6 @@ export const CreateUser = mutationField("createUser", {
             gender: input?.gender as Gender,
           },
         },
-        ...accessibleBy(ctx.ability, "create", "User"),
       },
     })
 

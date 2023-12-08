@@ -1,5 +1,4 @@
 import { Prisma, UserStatusEnum } from "@prisma/client"
-import { accessibleBy } from "lib/casl"
 import { arg, intArg, nonNull, nullable, queryField, stringArg } from "nexus"
 import { UsersType } from "../types"
 import { UserWhereInputType } from "../whereInputTypes"
@@ -14,8 +13,6 @@ export const Users = queryField("users", {
     skip: nonNull(intArg()),
   },
   resolve: async (_, { input, orderBy, take, skip }, ctx) => {
-    accessibleBy(ctx.ability, "read", "User")
-
     const _where: Prisma.UserWhereInput = {}
 
     if (input?.id) _where.id = input?.id
@@ -31,7 +28,7 @@ export const Users = queryField("users", {
       ]
 
     const users = await ctx.prisma.user.findMany({
-      where: { ..._where, ...accessibleBy(ctx.ability, "read", "User") },
+      where: { ..._where },
       include: {
         profile: true,
         address: true,
@@ -42,7 +39,7 @@ export const Users = queryField("users", {
     })
 
     const count = await ctx.prisma.user.count({
-      where: { ..._where, ...accessibleBy(ctx.ability, "read", "User") },
+      where: { ..._where },
     })
 
     return { data: users, count }

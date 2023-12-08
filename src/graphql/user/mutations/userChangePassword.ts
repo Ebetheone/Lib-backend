@@ -2,7 +2,6 @@ import { arg, mutationField, nonNull } from "nexus"
 import bcrypt from "bcrypt"
 import { UserChangePasswordInputType } from "../inputTypes"
 import { Errors } from "src/errors"
-import { accessibleBy } from "lib/casl"
 
 export const UserChangePassword = mutationField("userChangePassword", {
   type: "Boolean",
@@ -10,8 +9,6 @@ export const UserChangePassword = mutationField("userChangePassword", {
     input: nonNull(arg({ type: UserChangePasswordInputType })),
   },
   resolve: async (_root, { input }, ctx) => {
-    accessibleBy(ctx.ability, "update", "User")
-
     if (input.newPassword) {
       const passwordHash = await bcrypt.hash(input.newPassword, 10)
       input.newPassword = passwordHash
@@ -49,7 +46,6 @@ export const UserChangePassword = mutationField("userChangePassword", {
               await ctx.prisma.user.update({
                 where: {
                   id: ctxUserId,
-                  ...accessibleBy(ctx.ability, "update", "User"),
                 },
                 data: {
                   password: input.newPassword,
@@ -66,7 +62,6 @@ export const UserChangePassword = mutationField("userChangePassword", {
         await ctx.prisma.user.update({
           where: {
             id: ctxUserId,
-            ...accessibleBy(ctx.ability, "update", "User"),
           },
           data: {
             password: input.newPassword,

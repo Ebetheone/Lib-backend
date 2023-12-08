@@ -1,4 +1,3 @@
-import { accessibleBy } from "lib/casl"
 import { arg, nullable, queryField } from "nexus"
 import { UserType } from "../types"
 import { Prisma } from "@prisma/client"
@@ -10,8 +9,6 @@ export const User = queryField("user", {
     input: nullable(arg({ type: UserWhereInputType })),
   },
   resolve: async (_, { input }, ctx) => {
-    accessibleBy(ctx.ability, "read", "User")
-
     const _where: Prisma.UserWhereInput = {}
 
     if (input?.id) {
@@ -31,7 +28,7 @@ export const User = queryField("user", {
       ]
 
     const user = await ctx.prisma.user.findFirst({
-      where: { ..._where, ...accessibleBy(ctx.ability, "read", "User") },
+      where: { ..._where },
       include: { profile: true, address: true },
     })
 
