@@ -1,0 +1,60 @@
+model User {
+    id     String  @id @default(uuid())
+    userId String? @unique
+
+    role   UserRoleEnum    @default(USER)
+    status UserStatusEnum?
+
+    password String?
+
+    email            String? @unique(length: 191)
+    countryCode String? @default("976")
+    phone            String?
+
+    profile UserProfile? @relation(name: "UserToUserProfile")
+
+    accounts UserAccount[]
+    devices  UserDevice[]
+    sessions UserSession[]
+
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+    createdUserId String?
+    updatedUserId String?
+
+    @@unique([countryCode, phone])
+}
+
+model UserProfile {
+    id String @id @default(uuid())
+
+    user   User   @relation(name: "UserToUserProfile", fields: [userId], references: [id])
+    userId String @unique
+
+    firstName String?
+    lastName  String?
+
+    gender      Gender?   @default(NONE)
+    birthday DateTime?
+
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+    createdUserId String?
+    updatedUserId String?
+}
+
+enum Gender {
+    NONE
+    MALE
+    FEMALE
+}
+
+enum UserRoleEnum {
+    ADMIN
+    USER
+}
+
+enum UserStatusEnum {
+    ACTIVE
+    INACTIVE
+}

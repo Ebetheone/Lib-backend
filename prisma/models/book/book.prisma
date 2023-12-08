@@ -1,0 +1,11 @@
+model Book {
+    id     String  @id @default(uuid())
+    bookId String? @unique
+
+    
+
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+    createdUserId String?
+    updatedUserId String?
+}

@@ -1,0 +1,69 @@
+model UserAccount {
+    id String @id @default(uuid())
+
+    user   User?   @relation(fields: [userId], references: [id])
+    userId String?
+
+    userUid String?
+
+    providerName      String?
+    providerType      AccountProviderTypeEnum @default(NONE)
+    providerId        String?
+    providerAccountId String?
+
+    refreshToken       String?
+    accessToken        String?
+    accessTokenExpires DateTime?
+
+    signedIn DateTime @default(now())
+
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+    createdUserId String?
+    updatedUserId String?
+
+    @@unique([providerId, providerAccountId])
+}
+
+model UserDevice {
+    id String @id @default(uuid())
+
+    user   User   @relation(fields: [userId], references: [id])
+    userId String
+
+    deviceOs   String
+    deviceType String
+    deviceName String
+
+    isActive Boolean @default(true)
+
+    sessions UserSession[]
+}
+
+model UserSession {
+    id String @id @default(uuid())
+
+    user   User   @relation(fields: [userId], references: [id])
+    userId String
+
+    device   UserDevice @relation(fields: [deviceId], references: [id])
+    deviceId String
+
+    fcmToken String?
+
+    isActive Boolean @default(true)
+    expires  String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+enum AccountProviderTypeEnum {
+    NONE
+    EMAIL
+    PHONE
+    FACEBOOK
+    APPLE
+    GOOGLE
+    TWITTER
+}
