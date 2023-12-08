@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "outDir": "dist",
+    "lib": ["esnext", "dom"],
+    "strict": true,
+    "target": "ES2018",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "types": ["node"],
+    "rootDir": ".",
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "config": ["src/config/index.ts"],
+      "generated": ["src/generated/index.ts"],
+      "graphql/*": ["src/graphql/*"],
+      "lib/*": ["src/lib/*"],
+      "utils/*": ["src/utils/*"],
+      "src/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "**/dist/",
+    "**/__mocks__/*",
+    // "src/generated/nexus-typegen.ts",
+    "prisma"
+  ]
+}
